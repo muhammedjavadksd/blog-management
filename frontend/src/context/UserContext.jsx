@@ -16,7 +16,11 @@ export function UserContextProvider({ children }) {
     try {
       const res = await axios.get(URL + "/api/auth/refetch", {
         withCredentials: true,
-      });
+        headers: {
+          authorization: `Bearer ${user?.token}`
+        }
+      },
+      );
       // console.log(res.data)
       setUser(res.data);
     } catch (err) {

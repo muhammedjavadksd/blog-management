@@ -18,7 +18,11 @@ const PostDetails = () => {
   const fetchPost = async () => {
     setLoader(true);
     try {
-      const res = await axios.get(`${URL}/api/posts/${postId}`);
+      const res = await axios.get(`${URL}/api/posts/${postId}`, {
+        withCredentials: true, headers: {
+          authorization: `Bearer ${user?.token}`
+        }
+      });
       setPost(res.data);
     } catch (err) {
       console.log(err);
@@ -29,7 +33,11 @@ const PostDetails = () => {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(`${URL}/api/posts/${postId}`, { withCredentials: true });
+      await axios.delete(`${URL}/api/posts/${postId}`, {
+        withCredentials: true, headers: {
+          authorization: `Bearer ${user?.token}`
+        }
+      });
       navigate("/");
     } catch (err) {
       console.log(err);

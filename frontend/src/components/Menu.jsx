@@ -5,13 +5,16 @@ import { URL } from "../url";
 import { Link, useNavigate } from "react-router-dom";
 
 const Menu = () => {
-  const { user, setUser } = useContext(UserContext); 
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await axios.get(URL + "/api/auth/logout", { withCredentials: true });
-      setUser(null); 
+      await axios.get(URL + "/api/auth/logout",
+        {
+          withCredentials: true,
+        });
+      setUser(null);
       navigate("/login");
     } catch (err) {
       console.log(err);
@@ -32,7 +35,7 @@ const Menu = () => {
       )}
       {user && (
         <>
-        
+
           <h3 className="text-white text-sm hover:text-gray-500 cursor-pointer">
             <Link to="/write">Write</Link>
           </h3>

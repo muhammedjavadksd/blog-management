@@ -11,8 +11,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false); 
-  const { setUser,user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const { setUser, user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -23,11 +23,14 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
+
+
+      console.log(res.data);
       setUser(res.data);
       toast.success("Login successful!");
-  
+
       // Redirect to home page after successful login
-      
+
     } catch (err) {
       setError(true);
       toast.error("Login failed. Please try again.");
@@ -67,11 +70,10 @@ const Login = () => {
           <button
             onClick={handleLogin}
             disabled={loading} // Disable button when loading
-            className={`w-full px-4 py-3 font-semibold text-white ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-purple-600 hover:to-indigo-600"
-            } rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300`}
+            className={`w-full px-4 py-3 font-semibold text-white ${loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-purple-600 hover:to-indigo-600"
+              } rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300`}
           >
             {loading ? "Logging in..." : "Log in"}
           </button>

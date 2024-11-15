@@ -20,7 +20,11 @@ const EditPost = () => {
 
   const fetchPost = async () => {
     try {
-      const res = await axios.get(URL + "/api/posts/" + postId, { withCredentials: true });
+      const res = await axios.get(URL + "/api/posts/" + postId, {
+        withCredentials: true, headers: {
+          authorization: `Bearer ${user?.token}`
+        }
+      });
       setTitle(res.data.title);
       setDesc(res.data.desc);
       setFile(res.data.photo);
@@ -58,7 +62,11 @@ const EditPost = () => {
     post.photo = filename;
 
     try {
-      await axios.post(URL + "/api/upload", data, { withCredentials: true });
+      await axios.post(URL + "/api/upload", data, {
+        withCredentials: true, headers: {
+          authorization: `Bearer ${user?.token}`
+        }
+      });
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -69,6 +77,9 @@ const EditPost = () => {
     try {
       const res = await axios.put(URL + "/api/posts/" + postId, post, {
         withCredentials: true,
+        headers: {
+          authorization: `Bearer ${user?.token}`
+        }
       });
       toast.success("Post updated successfully!");
       navigate("/posts/post/" + res.data._id);

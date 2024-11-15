@@ -40,8 +40,15 @@ const CreatePost = () => {
             data.append("file", file)
             post.photo = filename
 
+
+            console.log(user);
             try {
-                await axios.post(URL + "/api/upload", data, { withCredentials: true })
+                await axios.post(URL + "/api/upload", data, {
+                    withCredentials: true,
+                    headers: {
+                        authorization: `Bearer ${user?.token}`
+                    }
+                })
             } catch (err) {
                 console.log(err)
                 setLoading(false)
@@ -51,7 +58,11 @@ const CreatePost = () => {
         }
 
         try {
-            const res = await axios.post(URL + "/api/posts/create", post, { withCredentials: true })
+            const res = await axios.post(URL + "/api/posts/create", post, {
+                withCredentials: true, headers: {
+                    authorization: `Bearer ${user?.token}`
+                }
+            })
             toast.success("Post created successfully!")
             navigate("/posts/post/" + res.data._id)
         } catch (err) {

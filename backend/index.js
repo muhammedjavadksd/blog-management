@@ -5,6 +5,15 @@ import cors from "cors";
 import multer from "multer";
 import path from "path";
 import cookieParser from "cookie-parser";
+
+const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
+
+
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/posts.js";
 import fs from "fs";
@@ -15,7 +24,6 @@ if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir, { recursive: true });
 }
 
-const app = express();
 
 // Database connection
 const connectDB = async () => {
@@ -30,7 +38,7 @@ const connectDB = async () => {
 // Middleware configuration
 dotenv.config();
 app.use(express.json());
-app.use(cors({ origin: "*", credentials: true }));
+
 app.use("/images", express.static(imagesDir)); // Serve static files from the 'images' folder
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
