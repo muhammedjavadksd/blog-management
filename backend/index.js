@@ -30,8 +30,8 @@ const connectDB = async () => {
 // Middleware configuration
 dotenv.config();
 app.use(express.json());
+app.use(cors({ origin: "*", credentials: true }));
 app.use("/images", express.static(imagesDir)); // Serve static files from the 'images' folder
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
